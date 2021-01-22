@@ -14,8 +14,6 @@ export default function GameScoreRow() {
       for (let i = 0; i < 17; i++) {
           if (i % 2 !== 0) { continue }
 
-          console.log(`running total at idx ${i}`, runningTotal);
-
           const try1 = scores[i];
           const try2 = scores[i + 1];
 
@@ -35,8 +33,6 @@ export default function GameScoreRow() {
       //add the 10th frame scores
       const frame10Score = scores[18] + scores[19] + scores[20];
       runningTotal += frame10Score;
-      console.log('frame 10 score', frame10Score);
-      console.log('total score', runningTotal);
 
       alert(`Your final score is ${runningTotal}!`);
   };
