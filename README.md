@@ -5,7 +5,7 @@ This is a React.js application, bootstrapped by `create-react-app`.
 
 [See it in action!](https://stoic-meitner-4cc86c.netlify.app)
 
-It uses the bowling scoring rules as described [here.] (http://www.fryes4fun.com/Bowling/scoring.htm)
+It uses the bowling scoring rules as described [here.](http://www.fryes4fun.com/Bowling/scoring.htm)
 
 ## How to run in your local environment:
 You will need `npm` and `node` installed on your machine.
