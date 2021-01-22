@@ -21,9 +21,7 @@ export default function Frame(props) {
     if (event.target.value === "X" || event.target.value === "x") {
       score = event.target.value;
       if (tryNum === 1) {
-        event.target.parentElement.querySelector(
-          'input[name="try-2"]'
-        ).disabled = true;
+        document.getElementById(`frame_${props.round}_try2`).disabled = true;
       }
     } else {
       score = parseInt(event.target.value);
@@ -86,7 +84,7 @@ export default function Frame(props) {
             type="text"
             min="0"
             max="10"
-            name="try-1"
+            id={`frame_${props.round}_try1`}
             onChange={(e) => handleScore(e, 1)}
             style={{ width: "75%" }}
           />
@@ -96,7 +94,7 @@ export default function Frame(props) {
             type="text"
             min="0"
             max="10"
-            name="try-2"
+            id={`frame_${props.round}_try2`}
             onChange={(e) => handleScore(e, 2)}
             style={{ width: "75%" }}
           />
@@ -109,7 +107,7 @@ export default function Frame(props) {
         <Grid container item xs={12}>
           <div className="fullWidth centered">Frame {props.round}</div>
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={6}>
           <input
             type="text"
             min="0"
@@ -118,7 +116,7 @@ export default function Frame(props) {
             style={{ width: "75%" }}
           />
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={6}>
           <input
             type="text"
             min="0"
@@ -127,7 +125,7 @@ export default function Frame(props) {
             style={{ width: "75%" }}
           />
         </Grid>
-        <Grid container item xs={4}>
+        <Grid container item xs={6}>
           <input
             type="text"
             min="0"
