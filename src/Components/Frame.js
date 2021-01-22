@@ -2,18 +2,15 @@ import React, { useState } from "react";
 import { Grid } from '@material-ui/core';
 
 export default function Frame(props) {
-    const [frameScore, setFrameScore] = useState(0);
-    console.log('frame score', frameScore);
-    console.log('player', props.player)
+    const [try1, setTry1] = useState(0);
+    const [try2, setTry2] = useState(0);
 
-    const handleFrameChange = (tryNum, value) => {
-        if (value === 10 || value === 'x' || value === 'X') {
-            console.log('strike');
-        } else if (value === '/') {
-            console.log('spare');
+   
+    const updateFrameAndTotal = (frame, value) => {
+        if (frame === 1) {
+            setTry1(try1 + parseInt(value));
         } else {
-            const additionalScore = parseInt(value);
-            setFrameScore(frameScore + additionalScore);
+            setTry2(try2 + parseInt(value));
         }
     }
     
@@ -25,14 +22,14 @@ export default function Frame(props) {
                 </div>
             </Grid>
             <Grid container item xs={6}>
-                <input type="number" onChange={e => handleFrameChange(1, e.target.value)} />
+                <input type="text" min="0" onChange={e => updateFrameAndTotal(1, e.target.value)} style={{width: '75%'}}/>
             </Grid>
             <Grid container item xs={6}>
-                <input type="number" onChange={e => handleFrameChange(2, e.target.value)} />
+                <input type="text" min="0" onChange={e => updateFrameAndTotal(2, e.target.value)} style={{width: '75%'}}/>
             </Grid>
-            <Grid container item xs={12}>
+            <Grid container item xs={12} className="largeMarginTop">
                 <div className="fullWidth centered">
-                    Frame Total: {frameScore}
+                    Frame Total: {(try1 + try2)}
                 </div>
             </Grid>
         </Grid>

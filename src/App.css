@@ -7,5 +7,9 @@
 }
 
 .largeMarginBottom {
-  margin: 3.5rem;
+  margin-bottom: 3.5rem;
+}
+
+.largeMarginTop {
+  margin-top: 3.5rem;
 }
