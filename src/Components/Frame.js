@@ -31,12 +31,18 @@ export default function Frame(props) {
     const idx = props.round * 2 - 2; //equates to the index in the array that this try corresponds to
     updatedScores[idx] = score;
 
-    if (typeof score === "string") {
+    if (score === 'X' || score === 'x') {
       score = 10;
     }
+
     if (tryNum == 1) {
       setTry1(score);
     } else {
+      if (score + try1 > 10) { 
+          alert('A frame\'s scores cannot add up to more than 10!');
+          document.getElementById(`frame_${props.round}_try2`).value = 0;
+          return;
+      }
       setTry2(score);
     }
 
