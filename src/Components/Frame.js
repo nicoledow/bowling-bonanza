@@ -1,37 +1,144 @@
-import React, { useState } from "react";
-import { Grid } from '@material-ui/core';
+import React, { useEffect, useState } from "react";
+import { Grid } from "@material-ui/core";
 
 export default function Frame(props) {
-    const [try1, setTry1] = useState(0);
-    const [try2, setTry2] = useState(0);
+  const [try1, setTry1] = useState(0);
+  const [try2, setTry2] = useState(0);
 
-   
-    const updateFrameAndTotal = (frame, value) => {
-        if (frame === 1) {
-            setTry1(try1 + parseInt(value));
-        } else {
-            setTry2(try2 + parseInt(value));
-        }
+  useEffect(() => {
+    if (try1 + try2 > 10) {
+      alert("A frame's scores cannot add up to more than 10!");
     }
-    
+  }, [try1, try2]);
+
+  const handleScore = (event, tryNum) => {
+    if (props.round === 10) {
+      handleFinalFrameScore(event, tryNum);
+      return;
+    }
+
+    let score;
+    if (event.target.value === "X" || event.target.value === "x") {
+      score = event.target.value;
+      if (tryNum === 1) {
+        event.target.parentElement.querySelector(
+          'input[name="try-2"]'
+        ).disabled = true;
+      }
+    } else {
+      score = parseInt(event.target.value);
+    }
+
+    const updatedScores = [...props.scores];
+    const idx = props.round * 2 - 2; //equates to the index in the array that this try corresponds to
+    updatedScores[idx] = score;
+
+    if (typeof score === "string") {
+      score = 10;
+    }
+    if (tryNum == 1) {
+      setTry1(score);
+    } else {
+      setTry2(score);
+    }
+
+    props.setScores(updatedScores);
+  };
+
+  const handleFinalFrameScore = (event, tryNum) => {
+    function allow3rdTry() {
+      const try3Input = document.getElementById("try-3");
+      try3Input.removeAttribute("disabled");
+    }
+
+    const updatedScores = [...props.scores];
+    let score;
+
+    //check if a strike on first shot
+    if (
+      tryNum === 1 &&
+      (event.target.value === "x" ||
+        event.target.value === "X" ||
+        event.target.value == 10)
+    ) {
+      allow3rdTry();
+      score = 10;
+    } else if (tryNum === 2 && props.scores.pop() + props.scores.pop() == 10) {
+      //check if spare in first two shots of 10th frame
+      allow3rdTry();
+      score = parseInt(event.target.value);
+    } else {
+      score = parseInt(event.target.value);
+    }
+
+    updatedScores[props.round * 2 - 2] = score;
+    props.setScores(updatedScores);
+  };
+
+  if (props.round !== 10) {
     return (
-        <Grid container direction="row" spacing={1}>
-            <Grid container item xs={12}>
-                <div className="fullWidth centered">
-                    Frame {props.round}
-                </div>
-            </Grid>
-            <Grid container item xs={6}>
-                <input type="text" min="0" onChange={e => updateFrameAndTotal(1, e.target.value)} style={{width: '75%'}}/>
-            </Grid>
-            <Grid container item xs={6}>
-                <input type="text" min="0" onChange={e => updateFrameAndTotal(2, e.target.value)} style={{width: '75%'}}/>
-            </Grid>
-            <Grid container item xs={12} className="largeMarginTop">
-                <div className="fullWidth centered">
-                    Frame Total: {(try1 + try2)}
-                </div>
-            </Grid>
+      <Grid container direction="row" spacing={1} className="scoreRow">
+        <Grid container item xs={12}>
+          <div className="fullWidth centered">Frame {props.round}</div>
         </Grid>
-    )
+        <Grid container item xs={6}>
+          <input
+            type="text"
+            min="0"
+            max="10"
+            name="try-1"
+            onChange={(e) => handleScore(e, 1)}
+            style={{ width: "75%" }}
+          />
+        </Grid>
+        <Grid container item xs={6}>
+          <input
+            type="text"
+            min="0"
+            max="10"
+            name="try-2"
+            onChange={(e) => handleScore(e, 2)}
+            style={{ width: "75%" }}
+          />
+        </Grid>
+      </Grid>
+    );
+  } else {
+    return (
+      <Grid container direction="row" spacing={1} className="scoreRow">
+        <Grid container item xs={12}>
+          <div className="fullWidth centered">Frame {props.round}</div>
+        </Grid>
+        <Grid container item xs={4}>
+          <input
+            type="text"
+            min="0"
+            max="10"
+            onChange={(e) => handleScore(e, 1)}
+            style={{ width: "75%" }}
+          />
+        </Grid>
+        <Grid container item xs={4}>
+          <input
+            type="text"
+            min="0"
+            max="10"
+            onChange={(e) => handleScore(e, 2)}
+            style={{ width: "75%" }}
+          />
+        </Grid>
+        <Grid container item xs={4}>
+          <input
+            type="text"
+            min="0"
+            max="10"
+            id="try-3"
+            disabled="disabled"
+            onChange={(e) => handleScore(e, 3)}
+            style={{ width: "75%" }}
+          />
+        </Grid>
+      </Grid>
+    );
+  }
 }
