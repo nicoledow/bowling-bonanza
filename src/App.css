@@ -20,3 +20,17 @@
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+.bbButton {
+  padding: 1rem;
+  background-color: #ffffff;
+  color: #000099;
+  border: 1px solid #000099;
+  font-family: 'Roboto', sans-serif;
+}
+
+.bbButton:hover {
+  color: #ffffff;
+  background-color: #000099;
+  cursor: pointer;
+}

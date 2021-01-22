@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Grid, Button } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 
 import Frame from "../Components/Frame";
 
@@ -77,7 +77,7 @@ export default function GameScoreRow() {
 
       <Grid container item xs={12} style={{marginTop: '3rem'}}>
         <div className="fullWidth centered">
-          <Button onClick={calculateScore}>Get Score</Button>
+          <button onClick={calculateScore} className={'bbButton'}>Get Score</button>
         </div>
       </Grid>
 
